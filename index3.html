@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D Student Carousel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+         :root {
+            --quantity: 4;
+            --translateZ: 320px;
+            --card-w: 240px;
+            --card-h: 340px;
+        }
+        
+        body {
+            margin: 0;
+            background: #0c0f12;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        
+        .scene {
+            perspective: 1200px;
+        }
+        
+        .wrapper {
+            width: var(--card-w);
+            height: var(--card-h);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 16s linear infinite;
+        }
+        
+        body.modal-open .wrapper {
+            animation-play-state: paused;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        .inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+        
+        .card {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            transform: rotateY(calc(360deg / var(--quantity) * var(--index))) translateZ(var(--translateZ));
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #151922;
+        }
+        
+        .card img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .card-buttons {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            transition: 0.5s;
+        }
+        
+        .card-buttons:hover {
+            transform: scale(2.2);
+            color: #cbd5e1;
+        }
+        
+        .btn-icon {
+            padding: 6px 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .reddit {
+            background: #ff4500;
+        }
+        
+        .discord {
+            background: #5865f2;
+        }
+        
+        .github {
+            background: #333;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 1000;
+        }
+        
+        .overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            width: min(900px, 92vw);
+            background: #0f1318;
+            border-radius: 16px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-content {
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+        }
+        
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .modal-text {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+        
+        .modal-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #222;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        @media(max-width:680px) {
+            .modal {
+                grid-template-columns: 1fr;
+            }
+             :root {
+                --translateZ: 240px;
+                --card-w: 200px;
+                --card-h: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="scene">
+            <div class="wrapper">
+                <div class="inner" style="--quantity:4;">
+                    <div class="card" style="--index:0;" data-title="Ayman" data-text="Computer Science." data-img="WhatsApp Image 2025-12-03 at 18.02.27.jpeg" data-reddit="https://reddit.com/u/alice" data-discord="https://discord.com/users/alice123" data-github="https://github.com/alice">
+                        <img src="WhatsApp Image 2025-12-03 at 18.02.27.jpeg" alt="Ayman">
+                        <div class="card-buttons">
+                            <a href="https://reddit.com/u/alice" target="_blank" class="btn-icon reddit"><i class="fa-brands fa-reddit"></i></a>
+                            <a href="https://discord.com/users/alice123" target="_blank" class="btn-icon discord"><i class="fa-brands fa-discord"></i></a>
+                            <a href="https://github.com/alice" target="_blank" class="btn-icon github"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" style="--index:1;" data-title="anass lachguer" data-text="student in sinf3" data-img="anime-tokyo_ghoul-ken_kaneki-685841.jpeg" data-reddit="https://reddit.com/u/brian" data-discord="https://discord.com/users/brian123" data-github="https://github.com/brian">
+                        <img src="anime-tokyo_ghoul-ken_kaneki-685841.jpeg" alt="anass">
+                        <div class="card-buttons">
+                            <a href="https://reddit.com/u/brian" target="_blank" class="btn-icon reddit"><i class="fa-brands fa-reddit"></i></a>
+                            <a href="https://discord.com/users/brian123" target="_blank" class="btn-icon discord"><i class="fa-brands fa-discord"></i></a>
+                            <a href="https://github.com/brian" target="_blank" class="btn-icon github"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" style="--index:2;" data-title="aissam" data-text="Design student passionate about UX/UI." data-img="WhatsApp Image 2025-12-03 at 18.02.27.jpeg" data-reddit="https://reddit.com/u/clara" data-discord="https://discord.com/users/clara123"
+                        data-github="https://github.com/clara">
+                        <img src="WhatsApp Image 2025-12-03 at 18.02.27.jpeg" alt="aissam">
+                        <div class="card-buttons">
+                            <a href="https://reddit.com/u/clara" target="_blank" class="btn-icon reddit"><i class="fa-brands fa-reddit"></i></a>
+                            <a href="https://discord.com/users/clara123" target="_blank" class="btn-icon discord"><i class="fa-brands fa-discord"></i></a>
+                            <a href="https://github.com/clara" target="_blank" class="btn-icon github"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" style="--index:3;" data-title="ahmed manssouri" data-text=" data science." data-img="WhatsApp Image 2025-12-03 at 17.59.40.jpeg" data-reddit="https://reddit.com/u/david" data-discord="https://discord.com/users/david123" data-github="https://github.com/david">
+                        <img src="WhatsApp Image 2025-12-03 at 17.59.40.jpeg" alt="ahmed">
+                        <div class="card-buttons">
+                            <a href="https://reddit.com/u/david" target="_blank" class="btn-icon reddit"><i class="fa-brands fa-reddit"></i></a>
+                            <a href="https://discord.com/users/david123" target="_blank" class="btn-icon discord"><i class="fa-brands fa-discord"></i></a>
+                            <a href="https://github.com/david" target="_blank" class="btn-icon github"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <img id="modal-img" src="" alt="Student">
+            <div class="modal-content">
+                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-text" id="modal-text"></div>
+                <div class="modal-actions">
+                    <a id="modal-reddit" href="#" target="_blank" class="btn reddit"><i class="fa-brands fa-reddit"></i></a>
+                    <a id="modal-discord" href="#" target="_blank" class="btn discord"><i class="fa-brands fa-discord"></i></a>
+                    <a id="modal-github" href="#" target="_blank" class="btn github"><i class="fa-brands fa-github"></i></a>
+                    <button class="btn" id="close-btn" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const body = document.body,
+            overlay = document.getElementById('overlay'),
+            modalImg = document.getElementById('modal-img'),
+            modalTitle = document.getElementById('modal-title'),
+            modalText = document.getElementById('modal-text'),
+            modalReddit = document.getElementById('modal-reddit'),
+            modalDiscord = document.getElementById('modal-discord'),
+            modalGithub = document.getElementById('modal-github');
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                modalTitle.textContent = card.dataset.title;
+                modalText.textContent = card.dataset.text;
+                modalImg.src = card.dataset.img;
+                modalReddit.href = card.dataset.reddit;
+                modalDiscord.href = card.dataset.discord;
+                modalGithub.href = card.dataset.github;
+                overlay.classList.add('show');
+                body.classList.add('modal-open');
+            });
+        });
+
+        const close = () => {
+            overlay.classList.remove('show');
+            body.classList.remove('modal-open');
+        };
+
+        document.getElementById('close-btn').addEventListener('click', close);
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) close();
+        });
+        window.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && overlay.classList.contains('show')) {
+                close();
+            }
+        });
+    </script>
+</body>
+
+</html>

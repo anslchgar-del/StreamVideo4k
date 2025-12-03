@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamVideo4k - Glass Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+/* =========================================
+           1. CORE STYLES & VARIABLES
+           ========================================= */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+         :root {
+            --primary-color: #e50914;
+            --secondary-color: #b81d24;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --text-gray: #b3b3b3;
+            --dark-bg: #141414;
+            /* Keeping dark base for sections */
+            --light-bg: rgba(255, 255, 255, 0.1);
+            /* Glassy card bg */
+            --gradient: linear-gradient(135deg, #e50914 0%, #b81d24 100%);
+            --premium-gradient: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+            --transition: all 0.3s ease;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            /* الخلفية من الكود الثاني (Gradient) */
+            background: linear-gradient(135deg, hsl(210, 89%, 4%), #5757dd, #b32479);
+            background-attachment: fixed;
+            color: var(--text-light);
+            overflow-x: hidden;
+            padding-top: 80px;
+            /* Space for the fixed header */
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        /* =========================================
+           2. NEW HEADER & SIDEBAR (From Code 2)
+           ========================================= */
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, .15);
+            border-bottom: 1px solid rgba(255, 255, 255, .28);
+            backdrop-filter: blur(12px) saturate(150%);
+            -webkit-backdrop-filter: blur(12px) saturate(150%);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+            z-index: 1000;
+        }
+        
+        .left-section,
+        .mide,
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-text span {
+            color: var(--primary-color);
+        }
+        
+        .mide {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .mide form {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+            position: relative;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .18);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, .3);
+        }
+        
+        .header-btn {
+            padding: 12px 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, .25);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            transition: .25s;
+            font-size: 1rem;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255, 255, 255, .4);
+            transform: translateY(-2px);
+        }
+        
+        .right-section a {
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .22);
+            color: #fff;
+            font-weight: 600;
+            transition: .25s;
+        }
+        
+        .right-section a:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        /* Sidebar */
+        
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px) saturate(160%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: .35s;
+            border-right: 1px solid rgba(255, 255, 255, .1);
+            z-index: 1200;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        #sidebar a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            background: rgba(255, 255, 255, .1);
+            padding: 14px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        
+        #sidebar a:hover {
+            background: var(--primary-color);
+            padding-left: 20px;
+        }
+        
+        #close-sidebar {
+            font-size: 28px;
+            cursor: pointer;
+            align-self: flex-end;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 1100;
+        }
+        
+        .sidebar-open #sidebar {
+            left: 0;
+        }
+        
+        .sidebar-open #overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Search Results Dropdown */
+        
+        #searchResults {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            z-index: 1000;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+        /* =========================================
+           3. ORIGINAL VIDEO4K CONTENT STYLES
+           ========================================= */
+        /* Hero Section */
+        
+        .hero {
+            position: relative;
+            height: 70vh;
+            margin-bottom: 4rem;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 4rem 0;
+            max-width: 600px;
+            margin-left: 5%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero-badge {
+            background: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            line-heighnt-size: 2.5rem;
+        }
+        
+        .right-section a {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+        }
+    }
+    t: 1.6;
+}
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.btn {
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(229, 9, 20, 0.3);
+}
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.btn-secondary:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+.hero-info {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    color: #b3b3b3;
+    font-size: 0.9rem;
+}
+
+/* Section Components */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.section-subtitle {
+    color: #ddd;
+    margin-top: 5px;
+}
+.see-all {
+    color: var(--text-light);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+.see-all:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+/* Grid & Cards */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+.video-card {
+    background: rgba(255, 255, 255, 0.1);
+    /* Glass effect on cards */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.video-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+.video-thumbnail {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+.thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(45deg, #2b5876 0%, #4e4376 100%);
+}
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+.video-card:hover .video-overlay {
+    opacity: 1;
+}
+.play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.play-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+    color: var(--primary-color);
+}
+.video-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+.video-quality {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.video-info {
+    padding: 1rem;
+}
+.video-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.video-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+.video-rating {
+    color: #ffd700;
+    font-size: 0.85rem;
+}
+.video-rating span {
+    color: var(--text-gray);
+    margin-left: 5px;
+}
+
+/* Categories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+.category-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.2);
+}
+.category-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+.category-card p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Premium Specifics */
+.premium {
+    padding: 3rem 0;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+}
+.premium-bg {
+    background: var(--premium-gradient) !important;
+    color: #000;
+}
+.premium-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--premium-gradient);
+    color: #000;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.locked-text {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.locked-btn {
+    background: rgba(255, 255, 255, 0.2);
+    cursor: not-allowed;
+}
+.premium-cta {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #ffd700;
+    border-radius: 15px;
+    padding: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+    backdrop-filter: blur(10px);
+}
+.btn-premium {
+    background: var(--premium-gradient);
+    color: #000;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 4rem 0 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+.footer-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.footer-section ul {
+    list-style: none;
+}
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+.footer-section ul li a {
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: 0.3s;
+}
+.footer-section ul li a:hover {
+    color: var(--primary-color);
+    padding-left: 5px;
+}
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.social-links a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.social-links a:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+}
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    color: var(--text-gray);
+}
+
+/* Modals */
+.video-modal,
+.login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.video-modal.active,
+.login-modal.active {
+    display: flex;
+}
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+}
+.modal-content {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2001;
+}
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.modal-close:hover {
+    color: var(--primary-color);
+}
+.video-player video {
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
+}
+
+/* Login Modal Specifics */
+.login-content {
+    max-width: 400px;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff;
+}
+.full-width {
+    width: 100%;
+}
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+    }
+    .mide {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .right-section a {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="left-section">
+            <button id="menu-btn" class="header-btn"><i class="fa-solid fa-bars"></i></button>
+            <a href="#" class="logo-text"><i class="fas fa-play-circle"></i> streamVideo<span>4k</span></a>
+        </div>
+        <div class="mide">
+            <form onsubmit="event.preventDefault();">
+                <input type="text" id="searchInput" placeholder="Rechercher...">
+                <button type="submit" class="header-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <div id="searchResults"></div>
+            </form>
+        </div>
+        <div class="right-section">
+            <a href="sing up .html">Connexion</a>
+        </div>
+    </header>
+
+    <div id="sidebar">
+        <div id="close-sidebar"><i class="fas fa-times"></i></div>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a>
+        <a href="index2.html"><i class="fa-brands fa-youtube"></i>randomVEDIOS</a>
+        <a href="#trending"><i class="fas fa-fire"></i> Tendances</a>
+        <a href="#categories"><i class="fa-solid fa-th-large"></i> Catégories</a>
+        <a href="#premium"><i class="fa-solid fa-crown"></i> Premium</a>
+        <div style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+            <a href="index3.html"><i class="fa-solid fa-user"></i> CREATERS</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Paramètres</a>
+            <a href="#"><i class="fa-solid fa-envelope"></i> Contact</a>
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <div class="hero-background">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="container">
+                    <div class="hero-content">
+                        <span class="hero-badge">Nouveau</span>
+                        <h1 class="hero-title">Découvrez des milliers de vidéos</h1>
+                        <p class="hero-description">
+                            Profitez d'un contenu illimité en streaming. Des Video, documentaires et bien plus encore.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i> Regarder maintenant
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i> Plus d'infos
+                            </button>
+                        </div>
+                        <div class="hero-info">
+                            <span><i class="fas fa-star"></i> 4.8/5</span>
+                            <span><i class="fas fa-clock"></i> 1h 15min</span>
+                            <span><i class="fas fa-calendar"></i> 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trending" class="trending">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-fire"></i> Tendances
+                </h2>
+                <a href="#" class="see-all">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="video-grid">
+                <div class="video-card" data-video-id="1">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <span class="video-duration">1:15:30</span>
+                        <span class="video-quality">HD</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Nature</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 1.2M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Il y a 2 jours</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <span>4.5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card" data-video-id="2">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <span class="video-duration">45:20</span>
+                        <span class="video-quality">4K</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Documentaire</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 850K vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Il y a 5 jours</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="far fa-star"></i> <span>4.0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card" data-video-id="3">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <span class="video-duration">30:15</span>
+                        <span class="video-quality">HD</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Drama</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 2.1M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Il y a 1 semaine</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card" data-video-id="4">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <span class="video-duration">1:55:40</span>
+                        <span class="video-quality">HD</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Science-Fiction</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 1.5M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Il y a 3 jours</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <span>4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="categories" class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-th-large"></i> Les catégories disponibles
+                </h2>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <i class="fas fa-fist-raised"></i>
+                    <h3>Action</h3>
+                    <p>245 vidéos</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-laugh"></i>
+                    <h3>Comédie</h3>
+                    <p>189 vidéos</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Romance</h3>
+                    <p>156 vidéos</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-ghost"></i>
+                    <h3>Horreur</h3>
+                    <p>98 vidéos</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-book"></i>
+                    <h3>Documentaire</h3>
+                    <p>312 vidéos</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-child"></i>
+                    <h3>Famille</h3>
+                    <p>201 vidéos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="premium" class="premium">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-crown"></i> Premium Video
+                </h2>
+                <p class="section-subtitle">Accédez à du contenu exclusif de haute qualité</p>
+            </div>
+            <div class="video-grid">
+                <div class="video-card premium-card" data-video-id="p1">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder premium-bg">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="premium-badge">
+                            <i class="fas fa-crown"></i> Premium
+                        </div>
+                        <div class="video-overlay locked">
+                            <button class="play-btn locked-btn">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                            <p class="locked-text">Abonnement Premium requis</p>
+                        </div>
+                        <span class="video-duration">45:00</span>
+                        <span class="video-quality">4K</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Video1</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 3.5M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Nouveau</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card premium-card" data-video-id="p2">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder premium-bg">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="premium-badge">
+                            <i class="fas fa-crown"></i> Premium
+                        </div>
+                        <div class="video-overlay locked">
+                            <button class="play-btn locked-btn">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                            <p class="locked-text">Abonnement Premium requis</p>
+                        </div>
+                        <span class="video-duration">1:10:25</span>
+                        <span class="video-quality">4K</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Video2</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 2.8M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Exclusif</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card premium-card" data-video-id="p3">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder premium-bg">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="premium-badge">
+                            <i class="fas fa-crown"></i> Premium
+                        </div>
+                        <div class="video-overlay locked">
+                            <button class="play-btn locked-btn">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                            <p class="locked-text">Abonnement Premium requis</p>
+                        </div>
+                        <span class="video-duration">20:15</span>
+                        <span class="video-quality">4K</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Video3</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 1.9M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Primé</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card premium-card" data-video-id="p4">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-placeholder premium-bg">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="premium-badge">
+                            <i class="fas fa-crown"></i> Premium
+                        </div>
+                        <div class="video-overlay locked">
+                            <button class="play-btn locked-btn">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                            <p class="locked-text">Abonnement Premium requis</p>
+                        </div>
+                        <span class="video-duration">1:58:30</span>
+                        <span class="video-quality">4K</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Video4</h3>
+                        <p class="video-meta">
+                            <span class="views"><i class="fas fa-eye"></i> 1.2M vues</span>
+                            <span class="date"><i class="fas fa-calendar"></i> Exclusif</span>
+                        </p>
+                        <div class="video-rating">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <span>4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="premium-cta">
+                <div class="premium-cta-content">
+                    <i class="fas fa-crown" style="font-size: 3rem; color: #ffd700; margin-bottom: 1rem;"></i>
+                    <h3>Passez à Premium</h3>
+                    <p>Débloquez tout le contenu exclusif, sans publicité, en qualité 4K/8K</p>
+                    <button class="btn btn-premium">
+                        <i class="fas fa-crown"></i> S'abonner maintenant - 5.99€/mois
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>
+                        <i class="fas fa-play-circle"></i> streamVideo4k
+                    </h3>
+                    <p>Votre plateforme de streaming vidéo préférée avec des milliers de contenus à découvrir.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#trending">Tendances</a></li>
+                        <li><a href="#categories">Catégories</a></li>
+                        <li><a href="#premium">Premium</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Aide</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@streamVideo4k.com</li>
+                        <li><i class="fas fa-phone"></i> +212 744323765</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Marrakech</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 streamVideo4k . Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="video-modal" id="videoModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="video-player">
+                <video id="videoPlayer" controls>
+                    <source src="" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+            </div>
+            <div class="video-details">
+                <h2 id="modalVideoTitle">Titre de la vidéo</h2>
+                <p id="modalVideoDescription">Description de la vidéo...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="modal-overlay" id="loginOverlay"></div>
+        <div class="login-content modal-content"> <button class="modal-close" id="loginClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Se connecter</button>
+            </form>
+            <p class="login-footer" style="text-align: center; margin-top: 1rem; color: #aaa;">Pas encore de compte? <a href="#" style="color: var(--primary-color);">S'inscrire</a></p>
+        </div>
+    </div>
+
+    <script>
+        // ===== Sidebar Toggle Logic =====
+        const menuBtn = document.getElementById("menu-btn");
+        const closeBtn = document.getElementById("close-sidebar");
+        const overlay = document.getElementById("overlay");
+        const sidebar = document.getElementById("sidebar");
+
+        function toggleSidebar() {
+            document.body.classList.toggle("sidebar-open");
+        }
+
+        menuBtn.onclick = toggleSidebar;
+        closeBtn.onclick = toggleSidebar;
+        overlay.onclick = toggleSidebar;
+
+        // Close sidebar when clicking a link inside it
+        document.querySelectorAll('#sidebar a').forEach(link => {
+            link.addEventListener('click', () => document.body.classList.remove("sidebar-open"));
+        });
+
+        // ===== Search Functionality =====
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.toLowerCase();
+
+            // Setup results container
+            let resultsDiv = document.getElementById('searchResults');
+
+            searchTimeout = setTimeout(() => {
+                const videoCards = document.querySelectorAll('.video-card');
+                let found = 0;
+
+                if (query.length > 2) {
+                    videoCards.forEach(card => {
+                        const title = card.querySelector('.video-title').textContent.toLowerCase();
+                        if (title.includes(query)) {
+                            card.style.display = 'block';
+                            found++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    resultsDiv.style.display = 'block';
+                    if (found === 0) resultsDiv.innerHTML = `<p style="color:#ccc;">Aucun résultat.</p>`;
+                    else resultsDiv.innerHTML = `<p style="color:#ccc;">${found} vidéo(s) trouvée(s).</p>`;
+
+                } else {
+                    videoCards.forEach(c => c.style.display = 'block');
+                    resultsDiv.style.display = 'none';
+                }
+            }, 300);
+        });
+
+        // ===== Video Modal Logic =====
+        const videoModal = document.getElementById('videoModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalVideoTitle = document.getElementById('modalVideoTitle');
+        const modalVideoDescription = document.getElementById('modalVideoDescription');
+
+        const videoData = {
+            '1': {
+                title: 'Nature',
+                description: 'Immersion captivante au cœur de la nature.'
+            },
+            '2': {
+                title: 'Documentaire',
+                description: 'Enquête approfondie.'
+            },
+            '3': {
+                title: 'Drama',
+                description: 'Drame captivant explorant l\'âme humaine.'
+            },
+            '4': {
+                title: 'Science-Fiction',
+                description: 'Voyage dans le futur avec effets visuels.'
+            }
+        };
+
+        document.querySelectorAll('.video-card').forEach(card => {
+            const playBtn = card.querySelector('.play-btn');
+            const isPremium = card.classList.contains('premium-card');
+
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (isPremium) {
+                    alert("Ce contenu est réservé aux membres Premium !");
+                    return;
+                }
+                const videoId = card.getAttribute('data-video-id');
+                const info = videoData[videoId];
+                if (info) {
+                    modalVideoTitle.textContent = info.title;
+                    modalVideoDescription.textContent = info.description;
+                    videoModal.classList.add('active');
+                }
+            });
+        });
+
+        const closeVideoModal = () => videoModal.classList.remove('active');
+        modalClose.addEventListener('click', closeVideoModal);
+        modalOverlay.addEventListener('click', closeVideoModal);
+
+        // ===== Login Modal Logic =====
+        const loginModal = document.getElementById('loginModal');
+        const loginBtnNav = document.getElementById('loginBtnNav');
+        const loginOverlay = document.getElementById('loginOverlay');
+        const loginClose = document.getElementById('loginClose');
+
+        loginBtnNav.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.add('active');
+        });
+
+        const closeLoginModal = () => loginModal.classList.remove('active');
+        loginClose.addEventListener('click', closeLoginModal);
+        loginOverlay.addEventListener('click', closeLoginModal);
+
+        // Form Submit
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Connexion simulée réussie !');
+            closeLoginModal();
+        });
+
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+                closeLoginModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
